@@ -16,6 +16,8 @@ export default class ManageFilters {
       this._isFilteredByAssignee();
       this._setupEventListeners();
       this._setupFilters();
+      this.kate = document.getElementById('overwrite-me');
+      
   }
 
   _setupEventListeners() {
@@ -115,6 +117,7 @@ export default class ManageFilters {
     
     if (array.length) {
       append += '<h3 class="govuk-heading-s govuk-!-margin-bottom-0" id="Assignee-hook">Assignees</h3>';
+      
       array.forEach(assignee => {
           let hrefValue = this.urlForPage.split("&").filter((param) => !param.includes('selected-assignee='+assignee.value)).join("&");
           append += `<li id=${assignee.value}><a class="moj-filter__tag" href=${hrefValue}><span class="govuk-visually-hidden">Remove this filter</span>` + assignee.id + "</li>"
@@ -132,13 +135,48 @@ export default class ManageFilters {
 
   _searchTasktypes() {
     console.log("inside task types func")
+  
+    
     var searchInput = document.getElementById('search-tasktype')
+  
     if (searchInput.value != "") {
-      document.getElementById("filtered_task_types").innerHTML = '<h3 class="govuk-heading-s govuk-!-margin-bottom-0" id="Assignee-hook">Fish</h3>';
-      this.inputElementTasktypeFilter.forEach(element => console.log(element));
+      var input = searchInput.value
+      if (this.kate) {
+        var Nick = document.createElement("h3")
+        Nick.innerHTML = "Tasktypes";
+        this.kate.parentNode.replaceChild(Nick, this.kate)
+      }
+      this.inputElementTasktypeFilter.forEach(element => { 
+        console.log(element.id)
+        console.log(input)
+          if (element.id.includes(input)) {
+            console.log("matched")
+            let newLi = document.createElement("li")
+            newLi.innerHTML = element.id;
+            console.log(newLi)
+            Nick.parentNode.appendChild(newLi, Nick)
+          }
+        }
+        )
+     
+      // document.kate.innerHTML = '<h3 class="govuk-heading-s govuk-!-margin-bottom-0" id="Assignee-hook">Fish</h3>';
+      // kate.replaceChild = '<h3 class="govuk-heading-s govuk-!-margin-bottom-0" id="Assignee-hook">Fish</h3>';
+      
       console.log(searchInput.value)
     } else {
       console.log("input empty")
     }
   }
 }
+
+
+
+// <div>
+// <a id="myAnchor" href="http://www.stackoverflow.com">StackOverflow</a>
+// </div>
+
+
+// var myAnchor = document.getElementById("myAnchor");
+// var mySpan = document.createElement("span");
+// mySpan.innerHTML = "replaced anchor!";
+// myAnchor.parentNode.replaceChild(mySpan, myAnchor);
