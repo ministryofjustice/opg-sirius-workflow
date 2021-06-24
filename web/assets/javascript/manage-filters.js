@@ -1,11 +1,13 @@
 export default class ManageFilters {
   constructor(element) {
       this.filterComponents = element.querySelectorAll('.moj-filter__options');
-
+      console.log("this.filterComponents");
+      console.log(this.filterComponents);
       this.inputElementTasktypeFilter = element.querySelectorAll(".task-type");
       this.inputElementAssigneeFilter = element.querySelectorAll(".assignee-type");
-      this.tasktypeSearchBox = element.querySelector(".search-task-type-box")[0];
-
+      this.tasktypeSearchBox = document.getElementById('search-tasktype');
+      console.log("this.tasktypeSearchBox");
+      console.log(this.tasktypeSearchBox);
       this.urlForPage = window.location.search;
 
       this.teamSelection = element.querySelectorAll('.change-teams');
@@ -14,19 +16,18 @@ export default class ManageFilters {
       this._isFilteredByAssignee();
       this._setupEventListeners();
       this._setupFilters();
-      // this._searchTasktypes();
   }
 
   _setupEventListeners() {
+    console.log(this.filterComponents);
+    console.log(this.tasktypeSearchBox);
     this.filterComponents.forEach(element => {
         this._toggleFilterVisibility = this._toggleFilterVisibility.bind(this);
         element.querySelectorAll('.filter-toggle-button')[0].addEventListener('click', this._toggleFilterVisibility);
     });
 
-    this.tasktypeSearchBox.forEach(element => {
-      this._searchTasktypes = this._searchTasktypes.bind(this);
-      element.querySelectorAll('.search-task-type-box')[0].addEventListener('click', this._searchTasktypes);
-  });
+    this._searchTasktypes = this._searchTasktypes.bind(this);
+    this.tasktypeSearchBox.addEventListener('input', this._searchTasktypes);
 
   }
 
@@ -133,15 +134,11 @@ export default class ManageFilters {
     console.log("inside task types func")
     var searchInput = document.getElementById('search-tasktype')
     if (searchInput.value != "") {
+      document.getElementById("filtered_task_types").innerHTML = '<h3 class="govuk-heading-s govuk-!-margin-bottom-0" id="Assignee-hook">Fish</h3>';
       this.inputElementTasktypeFilter.forEach(element => console.log(element));
       console.log(searchInput.value)
     } else {
       console.log("input empty")
     }
   }
-
-
-
-
-
 }

@@ -15,7 +15,7 @@
   </div>
     
   <div role="group" class="app-c-option-select__container js-options-container filter-inner-container hide" id="list_of_tasks_to_filter" tabindex="-1" style="height: 254.333px;">
-    <div class="app-c-option-select__filter"> <label for="search-tasktype" class="govuk-label search-task-type-box">
+    <div class="app-c-option-select__filter govuk-label search-task-type-box"> <label for="search-tasktype">
         Enter a name
       </label>
       <input name="option-select-filter" id="search-tasktype" class="filterCheckboxes app-c-option-select__filter-input govuk-input" type="text" aria-describedby="checkboxes-19682d1b-count" aria-controls="checkboxes-19682d1b">
@@ -25,7 +25,7 @@
         {{/* <legend class="hide">Tasktypes</legend> */}}
         {{ range .LoadTasks }}
           <div class="govuk-checkboxes govuk-checkboxes--small">
-            <div class="govuk-checkboxes__item filter__checkbox">
+            <div class="govuk-checkboxes__item filter__checkbox" id="filtered_task_types">
               <input class="govuk-checkboxes__input task-type" id="{{ .Incomplete }}" name="selected-task-type" name="taskType" type="checkbox" value="{{ .Handle }}" {{if .IsSelected }}checked{{end}}>
               <label class="govuk-label govuk-checkboxes__label" for="">{{ .Incomplete }}</label>
               </input>
