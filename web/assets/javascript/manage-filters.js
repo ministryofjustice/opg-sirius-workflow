@@ -4,6 +4,8 @@ export default class ManageFilters {
 
       this.inputElementTasktypeFilter = element.querySelectorAll(".task-type");
       this.inputElementAssigneeFilter = element.querySelectorAll(".assignee-type");
+      this.tasktypeSearchBox = element.querySelector(".search-task-type-box")[0];
+
       this.urlForPage = window.location.search;
 
       this.teamSelection = element.querySelectorAll('.change-teams');
@@ -12,6 +14,7 @@ export default class ManageFilters {
       this._isFilteredByAssignee();
       this._setupEventListeners();
       this._setupFilters();
+      // this._searchTasktypes();
   }
 
   _setupEventListeners() {
@@ -19,6 +22,12 @@ export default class ManageFilters {
         this._toggleFilterVisibility = this._toggleFilterVisibility.bind(this);
         element.querySelectorAll('.filter-toggle-button')[0].addEventListener('click', this._toggleFilterVisibility);
     });
+
+    this.tasktypeSearchBox.forEach(element => {
+      this._searchTasktypes = this._searchTasktypes.bind(this);
+      element.querySelectorAll('.search-task-type-box')[0].addEventListener('click', this._searchTasktypes);
+  });
+
   }
 
   _setupFilters() {
@@ -118,6 +127,17 @@ export default class ManageFilters {
     let hrefValueWithoutSelectedTask = this.urlForPage.split("&").filter((param) => !param.includes("selected-task-type")).join("&");
     let hrefValue = hrefValueWithoutSelectedTask.split("&").filter((param) => !param.includes("selected-assignee")).join("&");
     document.getElementById("clear-filters").setAttribute('href', hrefValue);
+  }
+
+  _searchTasktypes() {
+    console.log("inside task types func")
+    var searchInput = document.getElementById('search-tasktype')
+    if (searchInput.value != "") {
+      this.inputElementTasktypeFilter.forEach(element => console.log(element));
+      console.log(searchInput.value)
+    } else {
+      console.log("input empty")
+    }
   }
 
 
