@@ -1,0 +1,29 @@
+version: "3.6"
+services:
+  workflow:
+    build:
+      target: dev
+    environment:
+      SIRIUS_URL: http://docker.for.mac.localhost:8081
+    ports:
+      - '8888:1234'
+      - '2345:2345'
+    volumes:
+      - ..:/app:rw,delegated
+  proxy:
+    image: nginx
+    volumes:
+      - ./dev-proxy/nginx.json-server.conf:/etc/nginx/nginx.conf
+    ports:
+      - '8081:80'
+    external_links:
+      - json-server
+    depends_on:
+      - json-server
+    command: [nginx-debug, '-g', 'daemon off;']
+  json-server:
+    build:
+      context: ..
+      dockerfile: ./docker/json-server/Dockerfile
+    ports:
+      - '3000:3000'
